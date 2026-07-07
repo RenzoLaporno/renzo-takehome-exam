@@ -42,7 +42,8 @@
 
     async function loadEquipment() {
       const res = await fetch("/api/equipment");
-      equipmentList = await res.json();
+      const all = await res.json();
+      equipmentList = all.filter(item => item.status !== "maintenance");
       const select = document.getElementById("equipment");
       select.innerHTML = "";
       equipmentList.forEach(item => {
@@ -113,6 +114,7 @@
 
     document.getElementById("equipment").addEventListener("change", updateTotal);
     document.getElementById("from").addEventListener("change", updateTotal);
+    document.getElementById("to").addEventListener("change", updateTotal);
     document.getElementById("book").addEventListener("click", createBooking);
 
     loadEquipment();
